@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="SciResearchKit.png" alt="SciResearchKit: the full-lifecycle research skill for any AI model. Eight phases, three hard rules, runs on Claude, GPT, Gemini, Llama, and Mistral." width="640">
+<img src="srk_logo_animated.svg" alt="SciResearchKit: the full-lifecycle research skill for any AI model. Eight phases, three hard rules, runs on Claude, GPT, Gemini, Llama, and Mistral." width="640">
 
 # SciResearchKit
 
@@ -95,6 +95,17 @@ Any other model:
 2. Paste it into the system prompt.
 3. Add the reference file for your phase when you start it.
 
+## Distributions
+
+Two packaged forms of this toolkit live under `packaging/`:
+
+| Target | Install | Layout | Publish workflow |
+|---|---|---|---|
+| PyPI (`sciresearchkit`) | `pip install sciresearchkit` | `packaging/pypi/` (Hatch project; `src/sciresearchkit/data/` mirrors the corpus at build time) | `.github/workflows/publish-pypi.yml` (Trusted Publisher, no token) |
+| VS Code Marketplace (`sciresearchkit`) | Search "SciResearchKit" in the Extensions panel | `packaging/vscode/` (TypeScript extension; `dist/data/` mirrors the corpus at build time) | `.github/workflows/publish-vscode.yml` (`vsce` + `VSCE_PAT` secret) |
+
+Both packages ship the same content and enforce the same ethical-use conditions.
+
 ## How it works
 
 1. The model maps your request to one of the eight phases.
@@ -137,10 +148,23 @@ SciResearchKit/
 2. Claim calibration. The weakest claim the data support. Scientist hedges. See `references/claims-and-language.md`.
 3. Citation integrity. Every citation supports its sentence and resolves to a real, recent, top-tier source. See `references/citations.md`.
 
+## Ethical use
+
+SciResearchKit is made available to improve the efficiency of scientific work. It is not a replacement for manual human review, and it does not override any restriction on AI use imposed by a journal, conference, funder, institution, or ethics body.
+
+Four conditions apply to every use of the toolkit:
+
+1. A qualified human researcher reads, verifies, and signs off on every output before it is submitted or published.
+2. The user checks and complies with venue, funder, and institutional AI-use and disclosure policies. Do not use the toolkit for tasks where the applicable policy prohibits AI assistance — this includes, for many venues and funders, peer review and grant review.
+3. Do not upload confidential material (unpublished manuscripts under review, identifiable clinical data, third-party proprietary data) to a hosted AI system without the specific permission the confidentiality holder requires.
+4. Do not use the toolkit to fabricate data or citations, to bypass a required disclosure, to impersonate an author or reviewer, or to circumvent institutional or legal restrictions on AI in research.
+
+Full ethics statement, rationale, and a disclosure template: [`ETHICS.md`](ETHICS.md).
+
 ## When to use, when to skip
 
-Use it for papers, theses, preprints, grants, systematic reviews, and review reports. Skip it for casual summaries and quick factual lookups that need no method, claim calibration, or citation.
+Use it for papers, theses, preprints, grants, systematic reviews, and review reports — as a first-draft and mechanical-checks aid to a human researcher, within the ethical-use conditions above. Skip it for casual summaries, for quick factual lookups that need no method or citation, and for any task the target venue's or funder's policy places off-limits to AI assistance.
 
 ## License
 
-MIT.
+MIT. Use of the toolkit is additionally subject to the ethical-use conditions above.

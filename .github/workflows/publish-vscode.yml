@@ -1,0 +1,56 @@
+name: Publish SciResearchKit VS Code extension
+
+# Publishes on either:
+#   * a tag push matching vscode-v* (e.g. vscode-v0.1.0)
+#   * a manual workflow_dispatch run
+#
+# Requires a repository (or environment) secret VSCE_PAT: a Personal
+# Access Token generated in Azure DevOps for the publisher account
+# configured on https://marketplace.visualstudio.com/manage
+# (see https://code.visualstudio.com/api/working-with-extensions/publishing-extension).
+
+on:
+  push:
+    tags:
+      - "vscode-v*"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packaging/vscode
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: packaging/vscode/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Compile TypeScript + sync bundled content
+        run: npm run compile
+
+      - name: Package extension (.vsix)
+        run: npx --yes @vscode/vsce package --out sciresearchkit.vsix
+
+      - name: Upload VSIX artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sciresearchkit-vsix
+          path: packaging/vscode/sciresearchkit.vsix
+
+      - name: Publish to VS Code Marketplace
+        if: github.event_name == 'push' && startsWith(github.ref, 'refs/tags/vscode-v')
+        env:
+          VSCE_PAT: ${{ secrets.VSCE_PAT }}
+        run: npx --yes @vscode/vsce publish --packagePath sciresearchkit.vsix

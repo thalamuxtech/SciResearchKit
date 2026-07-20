@@ -1,0 +1,86 @@
+name: Publish sciresearchkit to PyPI
+
+# Publishes on either:
+#   * a tag push matching pypi-v* (e.g. pypi-v0.1.0)
+#   * a manual workflow_dispatch run
+#
+# Uses PyPI Trusted Publishing (OIDC): no API token stored in the repo.
+# Configure once at https://pypi.org/manage/account/publishing/ with:
+#   PyPI project name : sciresearchkit
+#   Owner             : <your GitHub org or user>
+#   Repository        : SciResearchKit
+#   Workflow name     : publish-pypi.yml
+#   Environment name  : pypi
+
+on:
+  push:
+    tags:
+      - "pypi-v*"
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.11", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install package + test deps
+        working-directory: packaging/pypi
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[dev]"
+      - name: Run tests
+        working-directory: packaging/pypi
+        run: pytest -q
+
+  build:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip build twine
+      - name: Build sdist + wheel
+        working-directory: packaging/pypi
+        run: python -m build
+      - name: Twine metadata check
+        working-directory: packaging/pypi
+        run: python -m twine check dist/*
+      - name: Upload dist artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: packaging/pypi/dist/
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/sciresearchkit
+    permissions:
+      id-token: write   # required for PyPI Trusted Publishing (OIDC)
+    steps:
+      - name: Download dist artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist/
+          print-hash: true

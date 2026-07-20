@@ -55,6 +55,21 @@ Three rules govern every output. They are non negotiable.
 
 If a request conflicts with these three rules, surface the conflict and ask before proceeding.
 
+## Ethical use
+
+SciResearchKit is a productivity aid for a human researcher. It does not replace manual human review and does not override any venue, funder, or institutional restriction on AI use.
+
+Four conditions apply to every use:
+
+1. A qualified human reads, verifies, and signs off on every output before it leaves the workstation with their name on it.
+2. The user checks and complies with the target venue's, funder's, and institution's AI-use and disclosure policies before the toolkit is used on a specific deliverable. Where a policy prohibits AI (for example, many venues' peer-review policies), do not use the toolkit for that task.
+3. The user does not paste confidential material (peer-review manuscripts, unpublished drafts, identifiable clinical data, third-party proprietary data) into any hosted AI system without the explicit permission that the confidentiality holder requires.
+4. The toolkit is not used to fabricate data or citations, to bypass a required disclosure, to impersonate an author or reviewer, or to circumvent institutional, funder, or legal restrictions.
+
+Full statement, rationale, and a disclosure template: `ETHICS.md`.
+
+If a request conflicts with any of the four conditions, surface the conflict and refuse until the user resolves it.
+
 ## Workflow
 
 Pick the phase that matches the request. Read the matching reference file before you act. Each file holds checklists, templates, and quality gates.

@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "sciresearchkit"
+version = "0.1.0"
+description = "Model-agnostic scientific-research skill (SKILL.md + reference files + IMRaD/response-to-reviewers/aims/preregistration templates) loadable into any capable LLM."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "Lukman E. Ismaila" }]
+keywords = [
+  "research",
+  "scientific-writing",
+  "manuscript-review",
+  "peer-review",
+  "citations",
+  "statistics",
+  "grants",
+  "reproducibility",
+  "systematic-review",
+  "claude-skill",
+  "model-agnostic",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Science/Research",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Text Processing :: Markup :: Markdown",
+]
+
+[project.urls]
+Homepage = "https://github.com/thalamuxtech/SciResearchKit"
+Repository = "https://github.com/thalamuxtech/SciResearchKit"
+Issues = "https://github.com/thalamuxtech/SciResearchKit/issues"
+
+[project.scripts]
+sciresearchkit = "sciresearchkit.__main__:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "build>=1.0", "twine>=5"]
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/sciresearchkit/**/*.py",
+  "src/sciresearchkit/data/**/*.md",
+  "README.md",
+  "LICENSE",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/sciresearchkit"]
+
+[tool.hatch.build.hooks.custom]
+path = "hatch_build.py"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

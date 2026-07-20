@@ -1,0 +1,89 @@
+{
+  "name": "sciresearchkit",
+  "displayName": "SciResearchKit",
+  "description": "Load the SciResearchKit scientific-research skill (SKILL.md + reference files + IMRaD/response-to-reviewers/aims/preregistration templates) into any editor. Model-agnostic Markdown; works with GitHub Copilot Chat, Continue, Cline, Cursor, or manual paste into Claude/GPT/Gemini.",
+  "version": "0.1.0",
+  "license": "MIT",
+  "publisher": "ismailukman",
+  "author": {
+    "name": "Lukman E. Ismaila"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thalamuxtech/SciResearchKit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/thalamuxtech/SciResearchKit/issues"
+  },
+  "homepage": "https://github.com/thalamuxtech/SciResearchKit#readme",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Snippets",
+    "Other"
+  ],
+  "keywords": [
+    "scientific writing",
+    "research",
+    "peer review",
+    "manuscript",
+    "citations",
+    "grants",
+    "IMRaD",
+    "CONSORT",
+    "PRISMA",
+    "STROBE",
+    "AI",
+    "LLM",
+    "Copilot",
+    "Claude",
+    "GPT",
+    "Gemini"
+  ],
+  "icon": "media/icon.png",
+  "main": "./dist/extension.js",
+  "activationEvents": [],
+  "contributes": {
+    "commands": [
+      {
+        "command": "sciresearchkit.insertSystemPrompt",
+        "title": "SciResearchKit: Insert system prompt (SKILL.md + ETHICS.md)"
+      },
+      {
+        "command": "sciresearchkit.openSkill",
+        "title": "SciResearchKit: Open SKILL.md"
+      },
+      {
+        "command": "sciresearchkit.openEthics",
+        "title": "SciResearchKit: Open ETHICS.md (ethical-use notice)"
+      },
+      {
+        "command": "sciresearchkit.openReference",
+        "title": "SciResearchKit: Open reference..."
+      },
+      {
+        "command": "sciresearchkit.openTemplate",
+        "title": "SciResearchKit: Open template..."
+      },
+      {
+        "command": "sciresearchkit.copySystemPromptToClipboard",
+        "title": "SciResearchKit: Copy system prompt to clipboard"
+      }
+    ]
+  },
+  "scripts": {
+    "sync-content": "node scripts/sync-content.js",
+    "compile": "npm run sync-content && tsc -p ./",
+    "watch": "tsc -p ./ -w",
+    "package": "npm run compile && vsce package --out sciresearchkit.vsix",
+    "publish": "npm run compile && vsce publish",
+    "test": "node ./out/test/runTest.js || true"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.4.0"
+  }
+}

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SciResearchKit logo previews</title>
+  <style>
+    body { margin: 0; padding: 40px; font-family: 'Segoe UI', system-ui, sans-serif;
+           background: #f7f7f9; color: #052A63; }
+    h1 { font-size: 20px; margin: 0 0 6px 0; }
+    p  { margin: 0 0 24px 0; color: #555; font-size: 14px; }
+    section { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+              padding: 32px; margin: 0 0 32px 0; max-width: 900px; }
+    section h2 { font-size: 16px; margin: 0 0 12px 0; }
+    section img { display: block; max-width: 100%; height: auto; }
+    .row { display: flex; gap: 32px; flex-wrap: wrap; }
+    .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 8px;
+            padding: 24px; flex: 1 1 320px; }
+    .card h3 { font-size: 14px; margin: 0 0 10px 0; color: #555; text-transform: uppercase;
+               letter-spacing: 0.6px; }
+    .icon { width: 128px; height: 128px; display: block; }
+  </style>
+</head>
+<body>
+
+  <h1>SciResearchKit &mdash; logo previews</h1>
+  <p>Open in any modern browser (Chrome / Edge / Firefox / Safari) to watch the animated variant play.</p>
+
+  <section>
+    <h2>Static SVG (srk_logo.svg)</h2>
+    <img src="srk_logo.svg" alt="SciResearchKit logo, static" width="620">
+  </section>
+
+  <section>
+    <h2>Animated SVG (srk_logo_animated.svg)</h2>
+    <p>Reload the page to replay the intro (mark slides in, red checkmark
+       draws in, wordmark fades up). Reduced-motion users see the final
+       state without motion.</p>
+    <img src="srk_logo_animated.svg" alt="SciResearchKit logo, animated" width="620">
+  </section>
+
+  <div class="row">
+    <div class="card">
+      <h3>Marketplace hero PNG (srk_logo_hero.png)</h3>
+      <p style="margin:0 0 12px 0;font-size:12px;color:#666;">Used as the
+         top-of-README image on PyPI and the VS Code Marketplace (both
+         strip SVG for security).</p>
+      <img src="srk_logo_hero.png" alt="Marketplace hero image" width="320">
+    </div>
+    <div class="card">
+      <h3>VS Code extension icon (128&times;128)</h3>
+      <img class="icon" src="packaging/vscode/media/icon.png" alt="VS Code extension icon">
+    </div>
+    <div class="card">
+      <h3>Original source PNG (srk_logo.png)</h3>
+      <img src="srk_logo.png" alt="Original SciResearchKit PNG" width="320">
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,57 +1,52 @@
 <div align="center">
 
-<img src="srk_logo_animated.svg" alt="SciResearchKit: the full-lifecycle research skill for any AI model. Eight phases, three hard rules, runs on Claude, GPT, Gemini, Llama, and Mistral." width="640">
+<img src="srk_logo_animated.svg" alt="SciResearchKit: the full-lifecycle research skill for any AI model. Eight phases, three hard rules, runs on Claude, GPT, Gemini, Llama, and Mistral." width="480">
 
 # SciResearchKit
 
-A model-agnostic Claude skill that turns any capable AI into a rigorous research collaborator. Eight phases, three hard rules, zero runtime.
+A model-agnostic AI skill that turns any capable LLM into a rigorous research collaborator. Eight phases, three hard rules, zero runtime.
 
 [![Type](https://img.shields.io/badge/type-AI%20Skill-1F3A5F)](#)
 [![Format](https://img.shields.io/badge/format-Markdown-blue)](#)
-[![Models](https://img.shields.io/badge/models-Claude%20%7C%20GPT%20%7C%20Gemini%20%7C%20Llama%20%7C%20Mistral-8E1B1B)](#compatibility-across-major-ai-models)
+[![Models](https://img.shields.io/badge/models-Claude%20%7C%20GPT%20%7C%20Gemini%20%7C%20Llama%20%7C%20Mistral-8E1B1B)](#compatibility)
 [![Phases](https://img.shields.io/badge/phases-8-success)](#the-eight-phases)
 [![PyPI](https://img.shields.io/badge/pypi-sciresearchkit-informational)](https://pypi.org/project/sciresearchkit/)
 [![VS Code](https://img.shields.io/badge/vscode-sciresearchkit-blueviolet)](https://marketplace.visualstudio.com/items?itemName=ismailukman.sciresearchkit)
 [![License](https://img.shields.io/badge/license-MIT-green)](#license)
 
-`research` · `scientific-writing` · `manuscript-review` · `peer-review` · `citations` · `statistics` · `grants` · `reproducibility` · `systematic-review` · `claude-skill` · `model-agnostic`
+<img src="srk_flowchart.png" alt="SciResearchKit at a glance: 3 hard rules on the left (Spartan Style, Calibrated Claims, Verified Citations), the 8-phase pipeline in the centre (Research Design, Methods & Statistics, Literature & Citations, Analysis & Results, Paper Writing, Reporting Standards, Peer & Manuscript Review, Grants & Proposals), venue coverage on the right (CVPR, ICCV, ECCV, NeurIPS, ICML, ICLR, MICCAI, Journals), and the compatible models along the bottom (Claude, GPT, Gemini, Llama, Mistral)." width="720">
 
 </div>
 
 ---
 
-## Summary
+## What it does
 
-SciResearchKit gives an AI model one consistent process for scientific work, from the first research question to the final reviewer response. It enforces three rules on every output: a spartan writing style, claims calibrated to the evidence, and citations verified against the claims they support. The whole skill is plain Markdown, so it runs on Claude, GPT, Gemini, Llama, Mistral, and any agent that reads text.
+SciResearchKit gives an AI model **one consistent process** for scientific work, from research question to reviewer response. Every output is checked against three hard rules before it comes back to you:
 
-## TL;DR
+1. **Spartan style** — clear, active, no filler, no em dashes
+2. **Calibrated claims** — language matched to evidence strength
+3. **Verified citations** — every reference must exist and support its sentence
 
-- One skill covers the full research lifecycle in eight phases.
-- Three hard rules stop the three failures that sink papers: weak writing, overconfident claims, and bad citations.
-- It ports to every major model. No code runs. No API is required.
-- It ships checklists, quality gates, and ready templates.
+It's plain Markdown. No code runs. No API required. It ports to every major model.
 
-## Why it exists
+## Install
 
-Three failures sink research material again and again:
+```bash
+# Claude Code (auto-loads by skill description)
+cp -r SciResearchKit ~/.claude/skills/
 
-- Authors overstate results. Reviewers reject overconfident claims.
-- Citations do not support the sentence they sit on, or do not exist.
-- The writing buries the contribution under filler.
+# Python agents (bundles the same corpus)
+pip install sciresearchkit
 
-SciResearchKit closes each one with a rule and a quality gate that the model runs before it returns work.
+# VS Code
+# Search "SciResearchKit" in the Extensions panel
+# or: code --install-extension ismailukman.sciresearchkit
 
-## What you get
-
-| Capability | What it does |
-|------------|--------------|
-| Full lifecycle | Design, methods, literature, analysis, writing, reporting, review, grants |
-| Spartan style | Short, active, concrete prose. No filler. No em dashes. |
-| Calibrated claims | Language matched to evidence strength on a fixed ladder |
-| Citation integrity | Support, existence, and priority tests on every reference |
-| Reporting standards | CONSORT, PRISMA, STROBE, ARRIVE, TRIPOD, FAIR |
-| Templates | IMRaD paper, response to reviewers, specific aims, preregistration |
-| Quality gates | A pass or fail checklist at the end of every phase |
+# Any other model (ChatGPT, Claude API, Gemini, Cursor, ...)
+# Paste SKILL.md into the system prompt. Add the reference file
+# for your phase when you start it.
+```
 
 ## The eight phases
 
@@ -66,112 +61,37 @@ SciResearchKit closes each one with a rule and a quality gate that the model run
 | 7 | Peer review and manuscript review | `references/peer-review.md`, `references/manuscript-review.md`, `references/venue-standards.md` |
 | 8 | Grants and proposals | `references/grants-and-proposals.md` |
 
-## Compatibility across major AI models
-
-| Platform / Model | How to load | Support |
-|------------------|-------------|---------|
-| Claude Code | Place the folder in `.claude/skills/`. Auto-loads. | Full |
-| Claude API / claude.ai | Paste `SKILL.md` into the system prompt. | Full |
-| GPT (ChatGPT, API) | Paste `SKILL.md` as a system or developer message. | Full |
-| Gemini | Paste `SKILL.md` into system instructions. | Full |
-| Llama, Mistral, open models | Use `SKILL.md` as the system prompt. | Full |
-| Cursor, Windsurf | Copy into the project rules file. | Full |
-| Codex, Cline, Continue | Add to the agent rules file. | Full |
-| MCP clients | Serve `references/` as resources. | Full |
-| Python agents | `pip install sciresearchkit` (bundles the same corpus) | Full |
-| VS Code | Install the SciResearchKit extension | Full |
-
-Full load steps and a copy-paste system prompt: `references/portability.md`.
-
-## Get started in 60 seconds
-
-Claude Code:
-
-```
-cp -r SciResearchKit ~/.claude/skills/
-```
-
-Then ask: "Review my methods section" or "Draft a response to these reviewers". The skill loads by description.
-
-Any other model:
-
-1. Open `SKILL.md`.
-2. Paste it into the system prompt.
-3. Add the reference file for your phase when you start it.
-
-## How it works
-
-1. The model maps your request to one of the eight phases.
-2. It reads the reference file for that phase.
-3. It produces the material under the three hard rules.
-4. It runs the phase quality gate before returning the result.
-5. It reports what it produced, what it assumed, and what stays open.
-
-## Repository structure
-
-```
-SciResearchKit/
-  SKILL.md                          Router, rules, compatibility matrix
-  ETHICS.md                         Ethical-use notice (see Ethical use below)
-  README.md                         This file
-  references/
-    writing-style.md                Spartan style contract and banned words
-    claims-and-language.md          Evidence-to-language ladder
-    citations.md                    Support, existence, priority tests
-    research-design.md              Phase 1
-    methods-and-statistics.md       Phase 2
-    literature-review.md            Phase 3
-    analysis-and-results.md         Phase 4
-    paper-writing.md                Phase 5
-    reporting-standards.md          Phase 6
-    peer-review.md                  Phase 7
-    manuscript-review.md            Phase 7 (referee protocol)
-    venue-standards.md              Phase 7 (CVPR, ICCV, NeurIPS, MICCAI, journals)
-    grants-and-proposals.md         Phase 8
-    portability.md                  Cross-model load steps
-  templates/
-    imrad-paper.md
-    response-to-reviewers.md
-    specific-aims.md
-    preregistration.md
-  packaging/
-    pypi/                           PyPI Python wrapper (sciresearchkit)
-    vscode/                         VS Code Marketplace extension
-```
-
-## The three hard rules
-
-1. Writing style. Clear, spartan, active voice. No em dashes. No banned filler. See `references/writing-style.md`.
-2. Claim calibration. The weakest claim the data support. Scientist hedges. See `references/claims-and-language.md`.
-3. Citation integrity. Every citation supports its sentence and resolves to a real, recent, top-tier source. See `references/citations.md`.
+Full load steps for every platform: [`references/portability.md`](references/portability.md).
 
 ## Ethical use
 
-SciResearchKit is made available to improve the efficiency of scientific work. It is not a replacement for manual human review, and it does not override any restriction on AI use imposed by a journal, conference, funder, institution, or ethics body.
+SciResearchKit is a productivity aid for a human researcher. It does not replace manual human review, and it does not override any restriction on AI use imposed by a journal, conference, funder, institution, or ethics body.
 
-Four conditions apply to every use of the toolkit:
+Four conditions apply to every use:
 
-1. A qualified human researcher reads, verifies, and signs off on every output before it is submitted or published.
+1. A qualified human reads, verifies, and signs off on every output before it is submitted or published.
 2. The user checks and complies with venue, funder, and institutional AI-use and disclosure policies. Do not use the toolkit for tasks where the applicable policy prohibits AI assistance, including, for many venues and funders, peer review and grant review.
 3. Do not upload confidential material (unpublished manuscripts under review, identifiable clinical data, third-party proprietary data) to a hosted AI system without the specific permission the confidentiality holder requires.
 4. Do not use the toolkit to fabricate data or citations, to bypass a required disclosure, to impersonate an author or reviewer, or to circumvent institutional or legal restrictions on AI in research.
 
-Full ethics statement, rationale, and a disclosure template: [`ETHICS.md`](ETHICS.md).
+Full ethics statement + disclosure template: [`ETHICS.md`](ETHICS.md).
 
-## When to use, when to skip
+## Repository layout
 
-Use it for papers, theses, preprints, grants, systematic reviews, and review reports, as a first-draft and mechanical-checks aid to a human researcher, within the ethical-use conditions above. Skip it for casual summaries, for quick factual lookups that need no method or citation, and for any task the target venue's or funder's policy places off-limits to AI assistance.
+```
+SciResearchKit/
+  SKILL.md                          Router, rules, compatibility matrix
+  ETHICS.md                         Ethical-use notice + disclosure template
+  references/*.md                   One file per phase (see table above)
+  templates/                        IMRaD paper, response-to-reviewers,
+                                    specific aims, preregistration
+  packaging/pypi/                   `pip install sciresearchkit`
+  packaging/vscode/                 VS Code Marketplace extension
+```
 
-## Distributions
+## Contributing / releases
 
-Two packaged forms of this toolkit live under `packaging/`:
-
-| Target | Install | Layout | Publish workflow |
-|---|---|---|---|
-| PyPI (`sciresearchkit`) | `pip install sciresearchkit` | `packaging/pypi/` (Hatch project; `src/sciresearchkit/data/` mirrors the corpus at build time) | `.github/workflows/publish-pypi.yml` (Trusted Publisher, no token) |
-| VS Code Marketplace (`sciresearchkit`) | Search "SciResearchKit" in the Extensions panel | `packaging/vscode/` (TypeScript extension; `dist/data/` mirrors the corpus at build time) | `.github/workflows/publish-vscode.yml` (`vsce` + `VSCE_PAT` secret) |
-
-Both packages ship the same content and enforce the same ethical-use conditions. Full release instructions: [`PUBLISHING.md`](PUBLISHING.md).
+Release instructions for PyPI and the VS Code Marketplace: [`PUBLISHING.md`](PUBLISHING.md).
 
 ## License
 

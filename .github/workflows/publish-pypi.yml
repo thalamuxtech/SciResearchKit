@@ -7,10 +7,16 @@ name: Publish sciresearchkit to PyPI
 # Uses PyPI Trusted Publishing (OIDC): no API token stored in the repo.
 # Configure once at https://pypi.org/manage/account/publishing/ with:
 #   PyPI project name : sciresearchkit
-#   Owner             : <your GitHub org or user>
+#   Owner             : thalamuxtech
 #   Repository        : SciResearchKit
 #   Workflow name     : publish-pypi.yml
-#   Environment name  : pypi
+#   Environment name  : (leave blank)
+#
+# No GitHub environment is used, so publish runs unattended on every
+# pypi-v* tag push. If you want a manual approval gate again later,
+# (a) create a GitHub environment named `pypi` with a required reviewer,
+# (b) set the same name in the PyPI trusted-publisher form,
+# (c) add `environment: pypi` back to the publish job below.
 
 on:
   push:
@@ -68,9 +74,6 @@ jobs:
   publish:
     needs: build
     runs-on: ubuntu-latest
-    environment:
-      name: pypi
-      url: https://pypi.org/p/sciresearchkit
     permissions:
       id-token: write   # required for PyPI Trusted Publishing (OIDC)
     steps:

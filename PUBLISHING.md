@@ -47,18 +47,15 @@ You do NOT create the project first on the PyPI website. You configure a **pendi
    - **Owner**: `thalamuxtech`
    - **Repository name**: `SciResearchKit`
    - **Workflow name**: `publish-pypi.yml`
-   - **Environment name**: `pypi`
+   - **Environment name**: (leave blank)
 4. Save.
 
-### 2b. Create the `pypi` environment on GitHub
+The workflow file does **not** use a GitHub environment, so PyPI's
+"Environment name" field must also be blank. If either side has a name
+set and the other does not, the OIDC handshake fails with an
+`invalid pending publisher config` error on the first publish.
 
-The workflow file requires an environment named `pypi` (so you get a review gate before every publish).
-
-1. GitHub → repo → **Settings** → **Environments** → **New environment** → name it `pypi`.
-2. Under **Deployment protection rules**, tick **Required reviewers** and add your own GitHub account (so a real person clicks Approve before publish).
-3. Save.
-
-### 2c. Release
+### 2b. Release
 
 ```bash
 cd C:/Users/ismailukman/Downloads/ResearchPapers/SciResearchKit
@@ -73,8 +70,7 @@ That triggers `publish-pypi.yml`:
 
 1. Tests run on Python 3.9 / 3.11 / 3.13.
 2. Wheel + sdist build; `twine check` runs.
-3. Waits at the `pypi` environment gate → you click **Approve** on GitHub.
-4. Publish job assumes the OIDC identity that PyPI trusts (no token) and uploads to <https://pypi.org/project/sciresearchkit/>.
+3. Publish job assumes the OIDC identity that PyPI trusts (no token) and uploads to <https://pypi.org/project/sciresearchkit/>. No manual approval gate.
 
 After it finishes, verify:
 
@@ -84,7 +80,12 @@ sciresearchkit --version
 sciresearchkit ethics | head -20
 ```
 
-### 2d. Subsequent releases
+If you later want a manual approval gate, (a) create a GitHub
+environment named `pypi` with a required reviewer, (b) set the same
+name in the PyPI trusted-publisher form, (c) add `environment: pypi`
+back to the `publish` job in the workflow.
+
+### 2c. Subsequent releases
 
 Bump `version` in `packaging/pypi/pyproject.toml`, commit, then:
 

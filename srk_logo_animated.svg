@@ -1,41 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1854 848" role="img" aria-labelledby="srkTitle srkDesc">
   <title id="srkTitle">SciResearchKit logo (animated)</title>
-  <desc id="srkDesc">SciResearchKit logo: a dark-navy graduation cap with a tassel on its left, sitting on a large circle enclosing a line-drawn microscope with a small red-checkmark seal, above the SciResearchKit wordmark. Animated: mark slides in, red checkmark draws in, wordmark fades up. Falls back to static for reduced-motion users.</desc>
+  <desc id="srkDesc">SciResearchKit logo: a dark-navy graduation cap with a tassel on its left, sitting on a large circle enclosing a line-drawn microscope with a small red-checkmark seal, above the SciResearchKit wordmark. Looping animation: mark slides in, red checkmark draws in, wordmark fades up, holds visible, then the cycle restarts every 5 seconds. Falls back to a static final state for prefers-reduced-motion users.</desc>
 
   <style>
-    /* SciResearchKit logo intro animation.
-       Timeline:
-         0.00s  mark (cap + circle + microscope) drops in from above
-         0.90s  red check tick draws in (left-to-right reveal)
-         1.30s  wordmark fades up
+    /* SciResearchKit logo intro animation, looped.
+       Each cycle is 5.0s long, replaying the intro then holding the
+       final state before restarting. All three animations share the
+       same 5s cycle so they stay in sync forever:
+         t=0.00s   mark slides in from above
+         t=0.90s   red check tick draws in (left-to-right)
+         t=1.30s   wordmark fades up
+         t=1.90s   full logo held visible
+         t=5.00s   cycle restarts
        prefers-reduced-motion users see the static final state. */
 
     #srk-mark {
       transform-origin: 944px 400px;
-      animation: srk-mark-in 0.80s cubic-bezier(0.22, 1, 0.36, 1) 0s both;
+      animation: srk-mark-cycle 5s cubic-bezier(0.22, 1, 0.36, 1) 0s infinite both;
     }
-    @keyframes srk-mark-in {
-      from { opacity: 0; transform: translateY(-60px) scale(0.94); }
-      to   { opacity: 1; transform: translateY(0)    scale(1);    }
+    @keyframes srk-mark-cycle {
+      /* 0.00s: hidden above (0% of 5s = 0%) */
+       0%  { opacity: 0; transform: translateY(-60px) scale(0.94); }
+      /* 0.80s: fully in place (16%) */
+      16%  { opacity: 1; transform: translateY(0)    scale(1);    }
+      /* 4.60s: still fully in place, about to fade for next cycle (92%) */
+      92%  { opacity: 1; transform: translateY(0)    scale(1);    }
+      /* 5.00s: slide back up, ready to re-enter (100%) */
+     100%  { opacity: 0; transform: translateY(-60px) scale(0.94); }
     }
 
     #srk-check-tick {
       transform-origin: 965px 379px;
-      clip-path: inset(0 100% 0 0);
-      animation: srk-tick-draw 0.40s cubic-bezier(0.65, 0, 0.35, 1) 0.90s both;
+      animation: srk-tick-cycle 5s cubic-bezier(0.65, 0, 0.35, 1) 0s infinite both;
     }
-    @keyframes srk-tick-draw {
-      from { clip-path: inset(0 100% 0 0); }
-      to   { clip-path: inset(0 0    0 0); }
+    @keyframes srk-tick-cycle {
+      /* hide until the mark is in (up to 18% = 0.90s) */
+       0%  { clip-path: inset(0 100% 0 0); }
+      18%  { clip-path: inset(0 100% 0 0); }
+      /* draw in over 0.40s (18% -> 26%) */
+      26%  { clip-path: inset(0 0    0 0); }
+      /* hold until near end of cycle */
+      92%  { clip-path: inset(0 0    0 0); }
+      /* clear off with the mark at cycle boundary */
+     100%  { clip-path: inset(0 100% 0 0); }
     }
 
     #srk-wordmark {
       transform-origin: 944px 640px;
-      animation: srk-word-in 0.60s cubic-bezier(0.22, 1, 0.36, 1) 1.30s both;
+      animation: srk-word-cycle 5s cubic-bezier(0.22, 1, 0.36, 1) 0s infinite both;
     }
-    @keyframes srk-word-in {
-      from { opacity: 0; transform: translateY(12px); }
-      to   { opacity: 1; transform: translateY(0);    }
+    @keyframes srk-word-cycle {
+      /* hide until t=1.30s (26%) */
+       0%  { opacity: 0; transform: translateY(12px); }
+      26%  { opacity: 0; transform: translateY(12px); }
+      /* fade up over 0.60s (26% -> 38%) */
+      38%  { opacity: 1; transform: translateY(0);   }
+      /* hold */
+      92%  { opacity: 1; transform: translateY(0);   }
+     100%  { opacity: 0; transform: translateY(12px); }
     }
 
     @media (prefers-reduced-motion: reduce) {

@@ -10,6 +10,8 @@ A model-agnostic Claude skill that turns any capable AI into a rigorous research
 [![Format](https://img.shields.io/badge/format-Markdown-blue)](#)
 [![Models](https://img.shields.io/badge/models-Claude%20%7C%20GPT%20%7C%20Gemini%20%7C%20Llama%20%7C%20Mistral-8E1B1B)](#compatibility-across-major-ai-models)
 [![Phases](https://img.shields.io/badge/phases-8-success)](#the-eight-phases)
+[![PyPI](https://img.shields.io/badge/pypi-sciresearchkit-informational)](https://pypi.org/project/sciresearchkit/)
+[![VS Code](https://img.shields.io/badge/vscode-sciresearchkit-blueviolet)](https://marketplace.visualstudio.com/items?itemName=ismailukman.sciresearchkit)
 [![License](https://img.shields.io/badge/license-MIT-green)](#license)
 
 `research` · `scientific-writing` · `manuscript-review` · `peer-review` · `citations` · `statistics` · `grants` · `reproducibility` · `systematic-review` · `claude-skill` · `model-agnostic`
@@ -76,6 +78,8 @@ SciResearchKit closes each one with a rule and a quality gate that the model run
 | Cursor, Windsurf | Copy into the project rules file. | Full |
 | Codex, Cline, Continue | Add to the agent rules file. | Full |
 | MCP clients | Serve `references/` as resources. | Full |
+| Python agents | `pip install sciresearchkit` (bundles the same corpus) | Full |
+| VS Code | Install the SciResearchKit extension | Full |
 
 Full load steps and a copy-paste system prompt: `references/portability.md`.
 
@@ -95,17 +99,6 @@ Any other model:
 2. Paste it into the system prompt.
 3. Add the reference file for your phase when you start it.
 
-## Distributions
-
-Two packaged forms of this toolkit live under `packaging/`:
-
-| Target | Install | Layout | Publish workflow |
-|---|---|---|---|
-| PyPI (`sciresearchkit`) | `pip install sciresearchkit` | `packaging/pypi/` (Hatch project; `src/sciresearchkit/data/` mirrors the corpus at build time) | `.github/workflows/publish-pypi.yml` (Trusted Publisher, no token) |
-| VS Code Marketplace (`sciresearchkit`) | Search "SciResearchKit" in the Extensions panel | `packaging/vscode/` (TypeScript extension; `dist/data/` mirrors the corpus at build time) | `.github/workflows/publish-vscode.yml` (`vsce` + `VSCE_PAT` secret) |
-
-Both packages ship the same content and enforce the same ethical-use conditions.
-
 ## How it works
 
 1. The model maps your request to one of the eight phases.
@@ -119,6 +112,7 @@ Both packages ship the same content and enforce the same ethical-use conditions.
 ```
 SciResearchKit/
   SKILL.md                          Router, rules, compatibility matrix
+  ETHICS.md                         Ethical-use notice (see Ethical use below)
   README.md                         This file
   references/
     writing-style.md                Spartan style contract and banned words
@@ -140,6 +134,9 @@ SciResearchKit/
     response-to-reviewers.md
     specific-aims.md
     preregistration.md
+  packaging/
+    pypi/                           PyPI Python wrapper (sciresearchkit)
+    vscode/                         VS Code Marketplace extension
 ```
 
 ## The three hard rules
@@ -155,7 +152,7 @@ SciResearchKit is made available to improve the efficiency of scientific work. I
 Four conditions apply to every use of the toolkit:
 
 1. A qualified human researcher reads, verifies, and signs off on every output before it is submitted or published.
-2. The user checks and complies with venue, funder, and institutional AI-use and disclosure policies. Do not use the toolkit for tasks where the applicable policy prohibits AI assistance — this includes, for many venues and funders, peer review and grant review.
+2. The user checks and complies with venue, funder, and institutional AI-use and disclosure policies. Do not use the toolkit for tasks where the applicable policy prohibits AI assistance, including, for many venues and funders, peer review and grant review.
 3. Do not upload confidential material (unpublished manuscripts under review, identifiable clinical data, third-party proprietary data) to a hosted AI system without the specific permission the confidentiality holder requires.
 4. Do not use the toolkit to fabricate data or citations, to bypass a required disclosure, to impersonate an author or reviewer, or to circumvent institutional or legal restrictions on AI in research.
 
@@ -163,7 +160,18 @@ Full ethics statement, rationale, and a disclosure template: [`ETHICS.md`](ETHIC
 
 ## When to use, when to skip
 
-Use it for papers, theses, preprints, grants, systematic reviews, and review reports — as a first-draft and mechanical-checks aid to a human researcher, within the ethical-use conditions above. Skip it for casual summaries, for quick factual lookups that need no method or citation, and for any task the target venue's or funder's policy places off-limits to AI assistance.
+Use it for papers, theses, preprints, grants, systematic reviews, and review reports, as a first-draft and mechanical-checks aid to a human researcher, within the ethical-use conditions above. Skip it for casual summaries, for quick factual lookups that need no method or citation, and for any task the target venue's or funder's policy places off-limits to AI assistance.
+
+## Distributions
+
+Two packaged forms of this toolkit live under `packaging/`:
+
+| Target | Install | Layout | Publish workflow |
+|---|---|---|---|
+| PyPI (`sciresearchkit`) | `pip install sciresearchkit` | `packaging/pypi/` (Hatch project; `src/sciresearchkit/data/` mirrors the corpus at build time) | `.github/workflows/publish-pypi.yml` (Trusted Publisher, no token) |
+| VS Code Marketplace (`sciresearchkit`) | Search "SciResearchKit" in the Extensions panel | `packaging/vscode/` (TypeScript extension; `dist/data/` mirrors the corpus at build time) | `.github/workflows/publish-vscode.yml` (`vsce` + `VSCE_PAT` secret) |
+
+Both packages ship the same content and enforce the same ethical-use conditions. Full release instructions: [`PUBLISHING.md`](PUBLISHING.md).
 
 ## License
 
